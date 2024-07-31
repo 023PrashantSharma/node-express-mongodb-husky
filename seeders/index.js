@@ -14,16 +14,16 @@ const { replaceAll } = require('../utils/common');
 const dbService = require('../utils/dbService');
 
 /* seeds default users */
-async function seedUser () {
+async function seedUser() {
   try {
     let userToBeInserted = {};
     userToBeInserted = {
       password: 'tRGyeP7QRgtYinN',
       isDeleted: false,
-      username: 'developer',
-      email: 'developer@yopmail.com',
+      username: 'SUPER_ADMIN',
+      email: 'SUPER_ADMIN@yopmail.com',
       isActive: true,
-      userType: authConstant.USER_TYPES.DEVELOPER,
+      userType: authConstant.USER_TYPES.SUPER_ADMIN,
     };
     userToBeInserted.password = await bcrypt.hash(userToBeInserted.password, 8);
     let user = await dbService.updateOne(
@@ -53,10 +53,12 @@ async function seedUser () {
   }
 }
 /* seeds roles */
-async function seedRole () {
+async function seedRole() {
   try {
-    const roles = ['DEVELOPER', 'SUPER_ADMIN', 'EMPLOYEE', 'TEAM_LEAD', 'HR'];
-    const insertedRoles = await dbService.findMany(Role, { code: { $in: roles.map((role) => role.toUpperCase()) }, });
+    const roles = ['SUPER_ADMIN', 'SUPER_ADMIN', 'EMPLOYEE', 'TEAM_LEAD', 'HR'];
+    const insertedRoles = await dbService.findMany(Role, {
+      code: { $in: roles.map((role) => role.toUpperCase()) },
+    });
     const rolesToInsert = [];
     roles.forEach((role) => {
       if (
@@ -84,7 +86,7 @@ async function seedRole () {
 }
 
 /* seeds routes of project */
-async function seedProjectRoutes (routes) {
+async function seedProjectRoutes(routes) {
   try {
     if (routes && routes.length) {
       let routeName = '';
@@ -121,487 +123,487 @@ async function seedProjectRoutes (routes) {
 }
 
 /* seeds role for routes */
-async function seedRouteRole () {
+async function seedRouteRole() {
   try {
     const routeRoles = [
       {
-        route: '/admin/user/create',
+        route: '/super-admin/user/create',
         role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/user/create',
+        route: '/super-admin/user/create',
         role: 'EMPLOYEE',
         method: 'POST',
       },
       {
-        route: '/admin/user/create',
-        role: 'DEVELOPER',
-        method: 'POST',
-      },
-      {
-        route: '/admin/user/addbulk',
+        route: '/super-admin/user/create',
         role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/user/addbulk',
-        role: 'EMPLOYEE',
-        method: 'POST',
-      },
-      {
-        route: '/admin/user/addbulk',
-        role: 'DEVELOPER',
-        method: 'POST',
-      },
-      {
-        route: '/admin/user/list',
+        route: '/super-admin/user/addbulk',
         role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/user/list',
+        route: '/super-admin/user/addbulk',
         role: 'EMPLOYEE',
         method: 'POST',
       },
       {
-        route: '/admin/user/list',
-        role: 'DEVELOPER',
+        route: '/super-admin/user/addbulk',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/user/:id',
+        route: '/super-admin/user/list',
+        role: 'SUPER_ADMIN',
+        method: 'POST',
+      },
+      {
+        route: '/super-admin/user/list',
+        role: 'EMPLOYEE',
+        method: 'POST',
+      },
+      {
+        route: '/super-admin/user/list',
+        role: 'SUPER_ADMIN',
+        method: 'POST',
+      },
+      {
+        route: '/super-admin/user/:id',
         role: 'SUPER_ADMIN',
         method: 'GET',
       },
       {
-        route: '/admin/user/:id',
+        route: '/super-admin/user/:id',
         role: 'EMPLOYEE',
         method: 'GET',
       },
       {
-        route: '/admin/user/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/user/:id',
+        role: 'SUPER_ADMIN',
         method: 'GET',
       },
       {
-        route: '/admin/user/count',
+        route: '/super-admin/user/count',
         role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/user/count',
+        route: '/super-admin/user/count',
         role: 'EMPLOYEE',
         method: 'POST',
       },
       {
-        route: '/admin/user/count',
-        role: 'DEVELOPER',
+        route: '/super-admin/user/count',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/user/update/:id',
+        route: '/super-admin/user/update/:id',
         role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/user/update/:id',
+        route: '/super-admin/user/update/:id',
         role: 'EMPLOYEE',
         method: 'PUT',
       },
       {
-        route: '/admin/user/update/:id',
-        role: 'DEVELOPER',
-        method: 'PUT',
-      },
-      {
-        route: '/admin/user/partial-update/:id',
+        route: '/super-admin/user/update/:id',
         role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/user/partial-update/:id',
-        role: 'EMPLOYEE',
-        method: 'PUT',
-      },
-      {
-        route: '/admin/user/partial-update/:id',
-        role: 'DEVELOPER',
-        method: 'PUT',
-      },
-      {
-        route: '/admin/user/updatebulk',
+        route: '/super-admin/user/partial-update/:id',
         role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/user/updatebulk',
+        route: '/super-admin/user/partial-update/:id',
         role: 'EMPLOYEE',
         method: 'PUT',
       },
       {
-        route: '/admin/user/updatebulk',
-        role: 'DEVELOPER',
-        method: 'PUT',
-      },
-      {
-        route: '/admin/user/softdelete/:id',
+        route: '/super-admin/user/partial-update/:id',
         role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/user/softdelete/:id',
-        role: 'EMPLOYEE',
-        method: 'PUT',
-      },
-      {
-        route: '/admin/user/softdelete/:id',
-        role: 'DEVELOPER',
-        method: 'PUT',
-      },
-      {
-        route: '/admin/user/softdeletemany',
+        route: '/super-admin/user/updatebulk',
         role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/user/softdeletemany',
+        route: '/super-admin/user/updatebulk',
         role: 'EMPLOYEE',
         method: 'PUT',
       },
       {
-        route: '/admin/user/softdeletemany',
-        role: 'DEVELOPER',
+        route: '/super-admin/user/updatebulk',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/user/delete/:id',
+        route: '/super-admin/user/softdelete/:id',
+        role: 'SUPER_ADMIN',
+        method: 'PUT',
+      },
+      {
+        route: '/super-admin/user/softdelete/:id',
+        role: 'EMPLOYEE',
+        method: 'PUT',
+      },
+      {
+        route: '/super-admin/user/softdelete/:id',
+        role: 'SUPER_ADMIN',
+        method: 'PUT',
+      },
+      {
+        route: '/super-admin/user/softdeletemany',
+        role: 'SUPER_ADMIN',
+        method: 'PUT',
+      },
+      {
+        route: '/super-admin/user/softdeletemany',
+        role: 'EMPLOYEE',
+        method: 'PUT',
+      },
+      {
+        route: '/super-admin/user/softdeletemany',
+        role: 'SUPER_ADMIN',
+        method: 'PUT',
+      },
+      {
+        route: '/super-admin/user/delete/:id',
         role: 'SUPER_ADMIN',
         method: 'DELETE',
       },
       {
-        route: '/admin/user/delete/:id',
+        route: '/super-admin/user/delete/:id',
         role: 'EMPLOYEE',
         method: 'DELETE',
       },
       {
-        route: '/admin/user/delete/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/user/delete/:id',
+        role: 'SUPER_ADMIN',
         method: 'DELETE',
       },
       {
-        route: '/admin/user/deletemany',
+        route: '/super-admin/user/deletemany',
         role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/user/deletemany',
+        route: '/super-admin/user/deletemany',
         role: 'EMPLOYEE',
         method: 'POST',
       },
       {
-        route: '/admin/user/deletemany',
-        role: 'DEVELOPER',
+        route: '/super-admin/user/deletemany',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/usertokens/create',
-        role: 'DEVELOPER',
+        route: '/super-admin/usertokens/create',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/usertokens/addbulk',
-        role: 'DEVELOPER',
+        route: '/super-admin/usertokens/addbulk',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/usertokens/list',
-        role: 'DEVELOPER',
+        route: '/super-admin/usertokens/list',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/usertokens/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/usertokens/:id',
+        role: 'SUPER_ADMIN',
         method: 'GET',
       },
       {
-        route: '/admin/usertokens/count',
-        role: 'DEVELOPER',
+        route: '/super-admin/usertokens/count',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/usertokens/update/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/usertokens/update/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/usertokens/partial-update/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/usertokens/partial-update/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/usertokens/updatebulk',
-        role: 'DEVELOPER',
+        route: '/super-admin/usertokens/updatebulk',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/usertokens/softdelete/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/usertokens/softdelete/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/usertokens/softdeletemany',
-        role: 'DEVELOPER',
+        route: '/super-admin/usertokens/softdeletemany',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/usertokens/delete/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/usertokens/delete/:id',
+        role: 'SUPER_ADMIN',
         method: 'DELETE',
       },
       {
-        route: '/admin/usertokens/deletemany',
-        role: 'DEVELOPER',
+        route: '/super-admin/usertokens/deletemany',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/role/create',
-        role: 'DEVELOPER',
+        route: '/super-admin/role/create',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/role/addbulk',
-        role: 'DEVELOPER',
+        route: '/super-admin/role/addbulk',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/role/list',
-        role: 'DEVELOPER',
+        route: '/super-admin/role/list',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/role/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/role/:id',
+        role: 'SUPER_ADMIN',
         method: 'GET',
       },
       {
-        route: '/admin/role/count',
-        role: 'DEVELOPER',
+        route: '/super-admin/role/count',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/role/update/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/role/update/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/role/partial-update/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/role/partial-update/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/role/updatebulk',
-        role: 'DEVELOPER',
+        route: '/super-admin/role/updatebulk',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/role/softdelete/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/role/softdelete/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/role/softdeletemany',
-        role: 'DEVELOPER',
+        route: '/super-admin/role/softdeletemany',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/role/delete/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/role/delete/:id',
+        role: 'SUPER_ADMIN',
         method: 'DELETE',
       },
       {
-        route: '/admin/role/deletemany',
-        role: 'DEVELOPER',
+        route: '/super-admin/role/deletemany',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/projectroute/create',
-        role: 'DEVELOPER',
+        route: '/super-admin/projectroute/create',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/projectroute/addbulk',
-        role: 'DEVELOPER',
+        route: '/super-admin/projectroute/addbulk',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/projectroute/list',
-        role: 'DEVELOPER',
+        route: '/super-admin/projectroute/list',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/projectroute/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/projectroute/:id',
+        role: 'SUPER_ADMIN',
         method: 'GET',
       },
       {
-        route: '/admin/projectroute/count',
-        role: 'DEVELOPER',
+        route: '/super-admin/projectroute/count',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/projectroute/update/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/projectroute/update/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/projectroute/partial-update/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/projectroute/partial-update/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/projectroute/updatebulk',
-        role: 'DEVELOPER',
+        route: '/super-admin/projectroute/updatebulk',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/projectroute/softdelete/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/projectroute/softdelete/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/projectroute/softdeletemany',
-        role: 'DEVELOPER',
+        route: '/super-admin/projectroute/softdeletemany',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/projectroute/delete/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/projectroute/delete/:id',
+        role: 'SUPER_ADMIN',
         method: 'DELETE',
       },
       {
-        route: '/admin/projectroute/deletemany',
-        role: 'DEVELOPER',
+        route: '/super-admin/projectroute/deletemany',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/routerole/create',
-        role: 'DEVELOPER',
+        route: '/super-admin/routerole/create',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/routerole/addbulk',
-        role: 'DEVELOPER',
+        route: '/super-admin/routerole/addbulk',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/routerole/list',
-        role: 'DEVELOPER',
+        route: '/super-admin/routerole/list',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/routerole/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/routerole/:id',
+        role: 'SUPER_ADMIN',
         method: 'GET',
       },
       {
-        route: '/admin/routerole/count',
-        role: 'DEVELOPER',
+        route: '/super-admin/routerole/count',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/routerole/update/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/routerole/update/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/routerole/partial-update/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/routerole/partial-update/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/routerole/updatebulk',
-        role: 'DEVELOPER',
+        route: '/super-admin/routerole/updatebulk',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/routerole/softdelete/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/routerole/softdelete/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/routerole/softdeletemany',
-        role: 'DEVELOPER',
+        route: '/super-admin/routerole/softdeletemany',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/routerole/delete/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/routerole/delete/:id',
+        role: 'SUPER_ADMIN',
         method: 'DELETE',
       },
       {
-        route: '/admin/routerole/deletemany',
-        role: 'DEVELOPER',
+        route: '/super-admin/routerole/deletemany',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/userrole/create',
-        role: 'DEVELOPER',
+        route: '/super-admin/userrole/create',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/userrole/addbulk',
-        role: 'DEVELOPER',
+        route: '/super-admin/userrole/addbulk',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/userrole/list',
-        role: 'DEVELOPER',
+        route: '/super-admin/userrole/list',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/userrole/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/userrole/:id',
+        role: 'SUPER_ADMIN',
         method: 'GET',
       },
       {
-        route: '/admin/userrole/count',
-        role: 'DEVELOPER',
+        route: '/super-admin/userrole/count',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
-        route: '/admin/userrole/update/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/userrole/update/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/userrole/partial-update/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/userrole/partial-update/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/userrole/updatebulk',
-        role: 'DEVELOPER',
+        route: '/super-admin/userrole/updatebulk',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/userrole/softdelete/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/userrole/softdelete/:id',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/userrole/softdeletemany',
-        role: 'DEVELOPER',
+        route: '/super-admin/userrole/softdeletemany',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
-        route: '/admin/userrole/delete/:id',
-        role: 'DEVELOPER',
+        route: '/super-admin/userrole/delete/:id',
+        role: 'SUPER_ADMIN',
         method: 'DELETE',
       },
       {
-        route: '/admin/userrole/deletemany',
-        role: 'DEVELOPER',
+        route: '/super-admin/userrole/deletemany',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
@@ -616,7 +618,7 @@ async function seedRouteRole () {
       },
       {
         route: '/device/api/v1/user/create',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
@@ -631,7 +633,7 @@ async function seedRouteRole () {
       },
       {
         route: '/device/api/v1/user/addbulk',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
@@ -646,7 +648,7 @@ async function seedRouteRole () {
       },
       {
         route: '/device/api/v1/user/list',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
@@ -661,7 +663,7 @@ async function seedRouteRole () {
       },
       {
         route: '/device/api/v1/user/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'GET',
       },
       {
@@ -676,7 +678,7 @@ async function seedRouteRole () {
       },
       {
         route: '/device/api/v1/user/count',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
@@ -691,7 +693,7 @@ async function seedRouteRole () {
       },
       {
         route: '/device/api/v1/user/update/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
@@ -706,7 +708,7 @@ async function seedRouteRole () {
       },
       {
         route: '/device/api/v1/user/partial-update/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
@@ -721,7 +723,7 @@ async function seedRouteRole () {
       },
       {
         route: '/device/api/v1/user/updatebulk',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
@@ -736,7 +738,7 @@ async function seedRouteRole () {
       },
       {
         route: '/device/api/v1/user/softdelete/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
@@ -751,7 +753,7 @@ async function seedRouteRole () {
       },
       {
         route: '/device/api/v1/user/softdeletemany',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
@@ -766,7 +768,7 @@ async function seedRouteRole () {
       },
       {
         route: '/device/api/v1/user/delete/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'DELETE',
       },
       {
@@ -781,307 +783,307 @@ async function seedRouteRole () {
       },
       {
         route: '/device/api/v1/user/deletemany',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/usertokens/create',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/usertokens/addbulk',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/usertokens/list',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/usertokens/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'GET',
       },
       {
         route: '/device/api/v1/usertokens/count',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/usertokens/update/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/usertokens/partial-update/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/usertokens/updatebulk',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/usertokens/softdelete/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/usertokens/softdeletemany',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/usertokens/delete/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'DELETE',
       },
       {
         route: '/device/api/v1/usertokens/deletemany',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/role/create',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/role/addbulk',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/role/list',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/role/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'GET',
       },
       {
         route: '/device/api/v1/role/count',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/role/update/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/role/partial-update/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/role/updatebulk',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/role/softdelete/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/role/softdeletemany',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/role/delete/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'DELETE',
       },
       {
         route: '/device/api/v1/role/deletemany',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/projectroute/create',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/projectroute/addbulk',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/projectroute/list',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/projectroute/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'GET',
       },
       {
         route: '/device/api/v1/projectroute/count',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/projectroute/update/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/projectroute/partial-update/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/projectroute/updatebulk',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/projectroute/softdelete/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/projectroute/softdeletemany',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/projectroute/delete/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'DELETE',
       },
       {
         route: '/device/api/v1/projectroute/deletemany',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/routerole/create',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/routerole/addbulk',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/routerole/list',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/routerole/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'GET',
       },
       {
         route: '/device/api/v1/routerole/count',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/routerole/update/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/routerole/partial-update/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/routerole/updatebulk',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/routerole/softdelete/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/routerole/softdeletemany',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/routerole/delete/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'DELETE',
       },
       {
         route: '/device/api/v1/routerole/deletemany',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/userrole/create',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/userrole/addbulk',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/userrole/list',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/userrole/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'GET',
       },
       {
         route: '/device/api/v1/userrole/count',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
       {
         route: '/device/api/v1/userrole/update/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/userrole/partial-update/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/userrole/updatebulk',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/userrole/softdelete/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/userrole/softdeletemany',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'PUT',
       },
       {
         route: '/device/api/v1/userrole/delete/:id',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'DELETE',
       },
       {
         route: '/device/api/v1/userrole/deletemany',
-        role: 'DEVELOPER',
+        role: 'SUPER_ADMIN',
         method: 'POST',
       },
     ];
@@ -1094,7 +1096,13 @@ async function seedRouteRole () {
       const routeMethods = [
         ...new Set(routeRoles.map((routeRole) => routeRole.method)),
       ];
-      const roles = ['DEVELOPER', 'SUPER_ADMIN', 'EMPLOYEE', 'TEAM_LEAD', 'HR'];
+      const roles = [
+        'SUPER_ADMIN',
+        'SUPER_ADMIN',
+        'EMPLOYEE',
+        'TEAM_LEAD',
+        'HR',
+      ];
       const insertedProjectRoute = await dbService.findMany(ProjectRoute, {
         uri: { $in: routes },
         method: { $in: routeMethods },
@@ -1159,7 +1167,7 @@ async function seedRouteRole () {
 }
 
 /* seeds roles for users */
-async function seedUserRole () {
+async function seedUserRole() {
   try {
     const userRoles = [
       {
@@ -1167,12 +1175,14 @@ async function seedUserRole () {
         password: 'tRGyeP7QRgtYinN',
       },
       {
-        username: 'developer',
+        username: 'SUPER_ADMIN',
         password: 'zcB7oXQrNxQuNIs',
       },
     ];
     const defaultRoles = await dbService.findMany(Role);
-    const insertedUsers = await dbService.findMany(User, { username: { $in: userRoles.map((userRole) => userRole.username) }, });
+    const insertedUsers = await dbService.findMany(User, {
+      username: { $in: userRoles.map((userRole) => userRole.username) },
+    });
     let user = {};
     const userRolesArr = [];
     userRoles.map((userRole) => {
@@ -1184,10 +1194,10 @@ async function seedUserRole () {
           !user.isDeleted
       );
       if (user) {
-        if (user.userType === authConstant.USER_TYPES.DEVELOPER) {
+        if (user.userType === authConstant.USER_TYPES.SUPER_ADMIN) {
           userRolesArr.push({
             userId: user.id,
-            roleId: defaultRoles.find((d) => d.code === 'DEVELOPER')._id,
+            roleId: defaultRoles.find((d) => d.code === 'SUPER_ADMIN')._id,
           });
         } else if (user.userType === authConstant.USER_TYPES.SUPER_ADMIN) {
           userRolesArr.push({
@@ -1242,7 +1252,7 @@ async function seedUserRole () {
   }
 }
 
-async function seedData (allRegisterRoutes) {
+async function seedData(allRegisterRoutes) {
   await seedUser();
   await seedRole();
   await seedProjectRoutes(allRegisterRoutes);

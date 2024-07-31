@@ -6,7 +6,7 @@
 const jwt = require('jsonwebtoken');
 const { PLATFORM } = require('../constants/authConstant');
 const deviceSecret = require('../constants/authConstant').JWT.DEVICE_SECRET;
-const adminSecret = require('../constants/authConstant').JWT.ADMIN_SECRET;
+const adminSecret = require('../constants/authConstant').JWT.USER_SECRET;
 
 /**
  * @description : middleware for authenticate user with JWT token
@@ -19,13 +19,12 @@ const authenticateJWT = (platform) => async (req, res, next) => {
   if (authHeader) {
     const token = authHeader.split(' ')[1];
     let secret = '';
-    if (platform == PLATFORM.DEVICE){
+    if (platform == PLATFORM.DEVICE) {
       secret = deviceSecret;
-    }
-    else if (platform == PLATFORM.ADMIN){
+    } else if (platform == PLATFORM.ADMIN) {
       secret = adminSecret;
     }
-    jwt.verify(token,secret, (error, user) => {
+    jwt.verify(token, secret, (error, user) => {
       if (error) {
         return res.unAuthorized();
       }
