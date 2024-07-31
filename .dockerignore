@@ -1,0 +1,30 @@
+# Node modules
+node_modules
+
+# Logs
+logs
+*.log
+
+# Environment variables
+.env
+
+# Postman files
+postman/environment-file.json
+postman/postman-collection.json
+postman/postman-collection-v.2.1.0.json
+postman/postman_documentation.html
+
+# Miscellaneous
+.DS_Store
+*.zip
+
+# Tests
+__test__
+
+# Others
+.vscode
+.git
+*Dockerfile*
+*DockerFile*
+*docker-compose*
+package-lock.json
